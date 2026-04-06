@@ -1,3 +1,6 @@
+# cursor
+.cursor/
+
 # prod
 dist/
 
