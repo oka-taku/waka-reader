@@ -1,0 +1,23 @@
+# prod
+dist/
+
+# dev
+.hono/
+.wrangler/
+.vscode/*
+!.vscode/launch.json
+.idea/
+
+# deps
+node_modules/
+
+# env
+.env
+.env.example
+.env.production
+.dev.vars
+
+# logs
+*.log
+
+.DS_Store

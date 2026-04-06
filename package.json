@@ -1,0 +1,27 @@
+{
+  "name": "waka-reader",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --mode client && vite build",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
+  },
+  "dependencies": {
+    "hono": "^4.12.10",
+    "honox": "^0.1.55",
+    "openai": "^6.33.0"
+  },
+  "devDependencies": {
+    "@hono/vite-build": "^1.11.1",
+    "@hono/vite-dev-server": "^0.25.1",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.3.5",
+    "wrangler": "^4.54.0"
+  }
+}
