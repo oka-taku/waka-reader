@@ -42,13 +42,13 @@ export default function WakaReader() {
     reader.readAsDataURL(file)
   }
 
-  const generateSpeech = async (text: string) => {
+  const generateSpeech = async (text: string, reading?: string) => {
     try {
       setAudioDisabled(true)
       const response = await fetch('/api/generate-speech', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, voice: 'ash' })
+        body: JSON.stringify({ text, reading, voice: 'ash' })
       })
       if (!response.ok) throw new Error('音声生成に失敗しました。')
       const audioBlob = await response.blob()
@@ -80,12 +80,14 @@ export default function WakaReader() {
         success?: boolean
         waka?: string
         hiragana?: string
+        speech?: string
       }
       if (!response.ok) throw new Error(data.error || 'サーバーエラーが発生しました。')
       if (data.success && data.waka) {
         setWaka(data.waka)
         setResultVisible(true)
-        if (data.hiragana) await generateSpeech(data.hiragana)
+        const speechText = data.speech || data.hiragana
+        if (speechText) await generateSpeech(speechText, data.hiragana)
       } else {
         throw new Error('和歌の生成に失敗しました。')
       }

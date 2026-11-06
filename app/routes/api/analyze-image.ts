@@ -24,16 +24,23 @@ export const POST = createRoute(async (c) => {
 
     let waka: string
     let hiragana: string
+    let speech: string
     try {
-      const jsonObj = JSON.parse(content) as { original?: string; hiragana?: string }
+      const jsonObj = JSON.parse(content) as {
+        original?: string
+        hiragana?: string
+        speech?: string
+      }
       waka = jsonObj.original ?? content
       hiragana = jsonObj.hiragana ?? content
+      speech = jsonObj.speech ?? hiragana
     } catch {
       waka = content
       hiragana = content
+      speech = content
     }
 
-    return c.json({ waka, hiragana, success: true })
+    return c.json({ waka, hiragana, speech, success: true })
   } catch (e) {
     console.error(e)
     const message = e instanceof Error ? e.message : '処理中にエラーが発生しました'

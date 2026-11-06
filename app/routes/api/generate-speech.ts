@@ -3,17 +3,17 @@ import { createSpeechWav } from '../../lib/openai-rest'
 
 export const POST = createRoute(async (c) => {
   try {
-    const body = await c.req.json<{ text?: string; voice?: string }>()
+    const body = await c.req.json<{ text?: string; voice?: string; reading?: string }>()
     if (!body?.text) {
       return c.json({ error: 'テキストが提供されていません' }, 400)
     }
 
-    const { text, voice = 'alloy' } = body
-    if (text.length > 4096) {
+    const { text, voice = 'alloy', reading } = body
+    if (text.length > 4096 || (reading && reading.length > 4096)) {
       return c.json({ error: 'テキストが長すぎます（4096文字以下にしてください）' }, 400)
     }
 
-    const buf = await createSpeechWav(text, voice)
+    const buf = await createSpeechWav(text, voice, reading)
     return new Response(buf, {
       headers: {
         'Content-Type': 'audio/wav',
